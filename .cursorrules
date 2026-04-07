@@ -1,0 +1,11 @@
+---
+description: 
+alwaysApply: true
+---
+
+- اكتب كوداً جاهزاً للإنتاج (production-ready)
+- لا تترك أي TODO أو placeholders في الكود
+- استخدم TypeScript في الواجهة الأمامية (إن أمكن)
+- أضف معالجة للأخطاء (error handling) في كل API endpoint
+- تأكد من أن جميع المتغيرات البيئة موجودة في ملفات .env.example
+- اكتب كوداً آمناً (XSS protection, SQL injection prevention حيث ينطبق)
