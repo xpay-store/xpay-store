@@ -25,6 +25,7 @@ frontend/.env.local
 frontend/.env.production.local
 
 # IDE
+.cursor/
 .idea/
 .vscode/
 *.swp
