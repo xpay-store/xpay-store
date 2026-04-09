@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AutoCode;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Provider;
@@ -97,8 +98,14 @@ class OrderProcessingService
         $result = $this->providers->fulfillOrder($order, $product, $provider);
 
         if ($result['ok']) {
+            $providerResponse = is_array($result['response']) ? $result['response'] : [];
+            $assignedCodes = $this->consumeAutoCodesForOrder($order, $product, $quantity);
+            if ($assignedCodes !== []) {
+                $providerResponse['auto_codes'] = $assignedCodes;
+            }
+
             $order->status = 'accept';
-            $order->provider_response = $result['response'];
+            $order->provider_response = $providerResponse;
             $order->save();
 
             return ['ok' => true, 'order' => $order->fresh()];
@@ -123,5 +130,33 @@ class OrderProcessingService
     private function makeOrderNumber(): string
     {
         return 'XP-'.now()->format('Ymd').'-'.Str::upper(Str::random(8));
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function consumeAutoCodesForOrder(Order $order, Product $product, int $quantity): array
+    {
+        $codes = [];
+        for ($i = 0; $i < $quantity; $i++) {
+            $row = AutoCode::query()
+                ->where('product_id', (string) $product->_id)
+                ->where('is_used', false)
+                ->orderBy('created_at')
+                ->first();
+
+            if (! $row) {
+                break;
+            }
+
+            $row->is_used = true;
+            $row->used_by_order_id = (string) $order->_id;
+            $row->used_at = now();
+            $row->save();
+
+            $codes[] = (string) $row->code;
+        }
+
+        return $codes;
     }
 }
