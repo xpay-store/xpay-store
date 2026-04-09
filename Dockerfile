@@ -30,6 +30,27 @@ COPY backend/ .
 
 RUN composer dump-autoload --optimize
 
+# إنشاء مستخدم Admin تلقائياً (إذا لم يكن موجوداً)
+RUN php artisan tinker --execute="
+\$user = App\Models\User::where('email', 'admin@xpay.com')->first();
+if (!\$user) {
+    App\Models\User::create([
+        'email' => 'admin@xpay.com',
+        'password' => bcrypt('password'),
+        'name' => 'Admin',
+        'role' => 'admin',
+        'telegram_id' => null,
+        'username' => 'admin',
+        'balance' => ['USD' => 0, 'SYP' => 0],
+        'is_banned' => false,
+        'supabase_uid' => null
+    ]);
+    echo \"Admin user created.\\n\";
+} else {
+    echo \"Admin user already exists.\\n\";
+}
+"
+
 ENV PORT=8080
 ENV HOST=0.0.0.0
 
