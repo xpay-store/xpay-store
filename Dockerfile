@@ -30,8 +30,8 @@ COPY backend/ .
 
 RUN composer dump-autoload --optimize
 
-# إنشاء مستخدم Admin تلقائياً (إذا لم يكن موجوداً)
-RUN php artisan tinker --execute="
+# إنشاء مستخدم Admin تلقائياً باستخدام PHP CLI
+RUN php -r "
 \$user = App\Models\User::where('email', 'admin@xpay.com')->first();
 if (!\$user) {
     App\Models\User::create([
