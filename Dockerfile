@@ -30,6 +30,13 @@ COPY backend/ .
 
 RUN composer dump-autoload --optimize
 
+# ============================================
+# تنظيف كاش Filament و Laravel (إضافة جديدة)
+# ============================================
+RUN php artisan view:clear
+RUN php artisan filament:cache-components
+RUN php artisan optimize:clear
+
 ENV PORT=8080
 ENV HOST=0.0.0.0
 
