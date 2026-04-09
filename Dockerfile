@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     libssl-dev \
     libgd-dev \
-    && docker-php-ext-install gd \
+    libzip-dev \
+    && docker-php-ext-install gd zip \
     && pecl install mongodb-1.20.0 \
     && docker-php-ext-enable mongodb \
     && rm -rf /var/lib/apt/lists/*
@@ -19,7 +20,7 @@ WORKDIR /app
 
 # Copy composer.json from backend folder
 COPY backend/composer.json ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader --no-scripts
+RUN composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader --no-scripts --ignore-platform-req=ext-gd --ignore-platform-req=ext-zip
 
 # Copy the rest of backend contents
 COPY backend/ .
