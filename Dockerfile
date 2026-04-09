@@ -15,10 +15,12 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-COPY composer.json ./
+# Copy composer.json from backend folder
+COPY backend/composer.json ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader --no-scripts
 
-COPY . .
+# Copy the rest of backend contents
+COPY backend/ .
 
 RUN composer dump-autoload --optimize
 
