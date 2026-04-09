@@ -10,7 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgd-dev \
     libzip-dev \
     libicu-dev \
-    && docker-php-ext-install gd zip intl \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd zip intl exif fileinfo bcmath \
     && pecl install mongodb-1.20.0 \
     && docker-php-ext-enable mongodb \
     && rm -rf /var/lib/apt/lists/*
@@ -20,7 +24,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY backend/composer.json ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader --no-scripts --ignore-platform-req=ext-gd --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
+RUN composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader --no-scripts --ignore-platform-req=all
 
 COPY backend/ .
 
