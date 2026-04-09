@@ -95,10 +95,16 @@ class OrderProcessingService
             return ['ok' => false, 'error' => 'order_failed', 'http' => 500];
         }
 
-        $result = $this->providers->fulfillOrder($order, $product, $provider);
+        $result = $this->providers->fulfillOrderWithFallback($order, $product, $provider);
 
         if ($result['ok']) {
             $providerResponse = is_array($result['response']) ? $result['response'] : [];
+            if (! empty($result['used_provider_id'])) {
+                $providerResponse['used_provider_id'] = $result['used_provider_id'];
+            }
+            if (! empty($result['tried_provider_ids'])) {
+                $providerResponse['tried_provider_ids'] = $result['tried_provider_ids'];
+            }
             $assignedCodes = $this->consumeAutoCodesForOrder($order, $product, $quantity);
             if ($assignedCodes !== []) {
                 $providerResponse['auto_codes'] = $assignedCodes;

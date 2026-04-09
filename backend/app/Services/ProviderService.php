@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Provider;
+use App\Models\ProviderPriority;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -190,6 +191,70 @@ class ProviderService
 
             return ['ok' => false, 'response' => null, 'error' => $e->getMessage()];
         }
+    }
+
+    /**
+     * Attempt provider fallback using ProviderPriority if primary fails.
+     *
+     * @return array{ok: bool, response: array<string, mixed>|null, error?: string, used_provider_id?: string, tried_provider_ids?: array<int,string>}
+     */
+    public function fulfillOrderWithFallback(Order $order, Product $product, Provider $primaryProvider): array
+    {
+        $tried = [];
+        $primary = $this->fulfillOrder($order, $product, $primaryProvider);
+        $tried[] = (string) $primaryProvider->_id;
+        if ($primary['ok'] === true) {
+            $primary['used_provider_id'] = (string) $primaryProvider->_id;
+            $primary['tried_provider_ids'] = $tried;
+
+            return $primary;
+        }
+
+        $priorityIds = ProviderPriority::query()
+            ->where('active', true)
+            ->orderBy('priority')
+            ->pluck('provider_id')
+            ->toArray();
+
+        foreach ($priorityIds as $providerId) {
+            $providerId = (string) $providerId;
+            if ($providerId === '' || in_array($providerId, $tried, true)) {
+                continue;
+            }
+            $candidate = Provider::query()->find($providerId);
+            if (! $candidate || ! $candidate->active) {
+                continue;
+            }
+            $candidateProduct = $this->findComparableProductForProvider($product, $candidate);
+            if (! $candidateProduct) {
+                continue;
+            }
+            $result = $this->fulfillOrder($order, $candidateProduct, $candidate);
+            $tried[] = (string) $candidate->_id;
+            if ($result['ok'] === true) {
+                $result['used_provider_id'] = (string) $candidate->_id;
+                $result['tried_provider_ids'] = $tried;
+
+                return $result;
+            }
+        }
+
+        $primary['tried_provider_ids'] = $tried;
+
+        return $primary;
+    }
+
+    private function findComparableProductForProvider(Product $base, Provider $provider): ?Product
+    {
+        return Product::query()
+            ->where('provider_id', (string) $provider->_id)
+            ->where(function ($q) use ($base) {
+                $q->where('name', (string) $base->name)
+                    ->orWhere('category_id', (string) $base->category_id);
+            })
+            ->where('available', true)
+            ->orderBy('updated_at', 'desc')
+            ->first();
     }
 
     public function fetchProviderBalance(Provider $provider): ?float
