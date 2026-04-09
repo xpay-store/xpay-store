@@ -18,7 +18,7 @@ class ProfitLog extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
-    protected static ?string $navigationGroup = 'التقارير';
+    protected static ?string $navigationGroup = 'المالية';
     protected static ?string $navigationLabel = 'سجل الأرباح';
     protected static string $view = 'filament.pages.profit-log';
 

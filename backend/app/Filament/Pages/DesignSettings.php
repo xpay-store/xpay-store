@@ -17,7 +17,7 @@ class DesignSettings extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
-    protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
+    protected static ?string $navigationGroup = 'الإعدادات';
     protected static ?string $navigationLabel = 'التصميم';
     protected static string $view = 'filament.pages.design-settings';
 

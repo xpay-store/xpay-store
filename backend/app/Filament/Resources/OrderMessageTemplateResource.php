@@ -13,7 +13,7 @@ class OrderMessageTemplateResource extends AdminResource
 {
     protected static ?string $model = OrderMessageTemplate::class;
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-    protected static ?string $navigationGroup = 'أدوات متقدمة';
+    protected static ?string $navigationGroup = 'الإعدادات';
     protected static ?string $navigationLabel = 'رسائل الطلب والرد';
 
     public static function form(Form $form): Form

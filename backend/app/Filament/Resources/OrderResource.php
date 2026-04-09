@@ -15,9 +15,9 @@ class OrderResource extends AdminResource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static ?string $navigationGroup = 'الطلبات والعمليات';
+    protected static ?string $navigationGroup = 'إدارة الطلبات';
 
-    protected static ?string $navigationLabel = 'الطلبات';
+    protected static ?string $navigationLabel = 'إدارة الطلبات';
 
     public static function form(Form $form): Form
     {

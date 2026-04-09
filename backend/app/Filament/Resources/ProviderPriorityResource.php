@@ -14,7 +14,7 @@ class ProviderPriorityResource extends AdminResource
 {
     protected static ?string $model = ProviderPriority::class;
     protected static ?string $navigationIcon = 'heroicon-o-bars-4';
-    protected static ?string $navigationGroup = 'المزودون';
+    protected static ?string $navigationGroup = 'API';
     protected static ?string $navigationLabel = 'أولوية المزودين';
 
     public static function form(Form $form): Form

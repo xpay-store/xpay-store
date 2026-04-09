@@ -13,7 +13,7 @@ class ProductResource extends AdminResource
 {
     protected static ?string $model = Product::class;
     protected static ?string $navigationIcon = 'heroicon-o-cube';
-    protected static ?string $navigationGroup = 'الفئات والمنتجات';
+    protected static ?string $navigationGroup = 'الأقسام والمنتجات';
     protected static ?string $navigationLabel = 'إدارة المنتجات';
 
     public static function form(Form $form): Form

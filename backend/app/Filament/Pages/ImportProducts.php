@@ -16,7 +16,7 @@ class ImportProducts extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
-    protected static ?string $navigationGroup = 'المزودون';
+    protected static ?string $navigationGroup = 'API';
     protected static ?string $navigationLabel = 'استيراد المنتجات';
     protected static string $view = 'filament.pages.import-products';
 

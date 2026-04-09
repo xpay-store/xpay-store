@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 class SocialLinkResource extends AdminResource
 {
     protected static ?string $model = SocialLink::class;
-    protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
+    protected static ?string $navigationGroup = 'الإعدادات';
     protected static ?string $navigationLabel = 'روابط التواصل';
     protected static ?string $navigationIcon = 'heroicon-o-link';
 

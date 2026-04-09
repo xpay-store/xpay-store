@@ -7,11 +7,10 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,25 +27,41 @@ class AdminPanelProvider extends PanelProvider
             ->path('panel')
             ->login()
             ->brandName('XPayStore Admin')
+            ->brandLogo(fn (): ?string => (\App\Models\Setting::general()->logo_url ?: null))
             ->defaultThemeMode(ThemeMode::Dark)
             ->darkMode(true)
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Blue,
             ])
             ->renderHook(
                 'panels::head.end',
                 fn (): string => view('filament.theme-vars')->render()
             )
+            ->renderHook(
+                'panels::sidebar.footer',
+                fn (): string => view('filament.sidebar-footer')->render()
+            )
+            ->navigationGroups([
+                NavigationGroup::make('لوحة القيادة'),
+                NavigationGroup::make('إدارة الطلبات'),
+                NavigationGroup::make('الأقسام والمنتجات'),
+                NavigationGroup::make('المالية'),
+                NavigationGroup::make('المستخدمون'),
+                NavigationGroup::make('API'),
+                NavigationGroup::make('الإعدادات'),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
                 \App\Filament\Widgets\StoreStatsOverview::class,
                 \App\Filament\Widgets\OrdersChart::class,
+                \App\Filament\Widgets\ProfitChart::class,
+                \App\Filament\Widgets\LatestOrdersTable::class,
+                \App\Filament\Widgets\PendingDepositsTable::class,
             ])
             ->middleware([
                 EncryptCookies::class,

@@ -9,7 +9,7 @@ use Filament\Pages\Page;
 class CouponsReferralsReport extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-chart-bar';
-    protected static ?string $navigationGroup = 'التقارير';
+    protected static ?string $navigationGroup = 'المالية';
     protected static ?string $navigationLabel = 'تقرير القسائم والإحالات';
     protected static string $view = 'filament.pages.coupons-referrals-report';
 

@@ -18,7 +18,7 @@ class SendNotification extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
-    protected static ?string $navigationGroup = 'أدوات متقدمة';
+    protected static ?string $navigationGroup = 'المستخدمون';
     protected static ?string $navigationLabel = 'إرسال إشعار';
     protected static string $view = 'filament.pages.send-notification';
 

@@ -14,8 +14,8 @@ class ProviderResource extends AdminResource
 {
     protected static ?string $model = Provider::class;
     protected static ?string $navigationIcon = 'heroicon-o-server';
-    protected static ?string $navigationGroup = 'المزودون';
-    protected static ?string $navigationLabel = 'إدارة المزودين';
+    protected static ?string $navigationGroup = 'API';
+    protected static ?string $navigationLabel = 'إدارة المزودين (A2Z / SMM)';
 
     public static function form(Form $form): Form
     {

@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 class SettingResource extends AdminResource
 {
     protected static ?string $model = Setting::class;
-    protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
+    protected static ?string $navigationGroup = 'الإعدادات';
     protected static ?string $navigationLabel = 'الإعدادات العامة';
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 

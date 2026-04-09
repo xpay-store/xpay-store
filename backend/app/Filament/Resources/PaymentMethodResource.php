@@ -13,7 +13,7 @@ class PaymentMethodResource extends AdminResource
 {
     protected static ?string $model = PaymentMethod::class;
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
-    protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
+    protected static ?string $navigationGroup = 'المالية';
     protected static ?string $navigationLabel = 'طرق الدفع';
 
     public static function form(Form $form): Form

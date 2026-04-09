@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 class CouponResource extends AdminResource
 {
     protected static ?string $model = Coupon::class;
-    protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
+    protected static ?string $navigationGroup = 'المالية';
     protected static ?string $navigationLabel = 'القسائم';
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 

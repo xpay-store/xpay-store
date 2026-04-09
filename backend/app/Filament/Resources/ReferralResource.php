@@ -13,7 +13,7 @@ class ReferralResource extends AdminResource
 {
     protected static ?string $model = Referral::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
-    protected static ?string $navigationGroup = 'التقارير';
+    protected static ?string $navigationGroup = 'المستخدمون';
     protected static ?string $navigationLabel = 'الإحالات';
 
     public static function form(Form $form): Form

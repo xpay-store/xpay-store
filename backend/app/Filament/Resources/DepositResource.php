@@ -13,7 +13,7 @@ class DepositResource extends AdminResource
 {
     protected static ?string $model = Deposit::class;
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-    protected static ?string $navigationGroup = 'الطلبات والعمليات';
+    protected static ?string $navigationGroup = 'إدارة الطلبات';
     protected static ?string $navigationLabel = 'الإيداع اليدوي';
 
     public static function form(Form $form): Form

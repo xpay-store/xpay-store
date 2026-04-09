@@ -13,8 +13,8 @@ class AutoCodeResource extends AdminResource
 {
     protected static ?string $model = AutoCode::class;
     protected static ?string $navigationIcon = 'heroicon-o-key';
-    protected static ?string $navigationGroup = 'المنتجات المتقدمة';
-    protected static ?string $navigationLabel = 'إدارة الأكواد التلقائية';
+    protected static ?string $navigationGroup = 'الأقسام والمنتجات';
+    protected static ?string $navigationLabel = 'منتجات المخزون';
 
     public static function form(Form $form): Form
     {
