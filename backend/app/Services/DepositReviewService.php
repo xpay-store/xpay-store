@@ -8,7 +8,8 @@ use App\Models\User;
 class DepositReviewService
 {
     public function __construct(
-        private TelegramBotService $telegram
+        private TelegramBotService $telegram,
+        private OrderMessageService $messages
     ) {}
 
     public function approve(Deposit $deposit, ?string $reviewerLabel = null): bool
@@ -37,7 +38,11 @@ class DepositReviewService
         $deposit->reviewed_at = now();
         $deposit->save();
 
-        $this->telegram->sendStoreUserMessage((int) $user->telegram_id, '✅ تم قبول إيداعك بنجاح. تم تحديث رصيدك.');
+        $text = $this->messages->render('deposit_approved', [
+            'amount_usd' => number_format($usd, 2),
+            'amount_syp' => number_format($syp, 0),
+        ], '✅ تم قبول إيداعك بنجاح. تم تحديث رصيدك.');
+        $this->telegram->sendStoreUserMessage((int) $user->telegram_id, $text);
 
         return true;
     }
@@ -58,7 +63,8 @@ class DepositReviewService
         $deposit->reviewed_at = now();
         $deposit->save();
 
-        $this->telegram->sendStoreUserMessage((int) $user->telegram_id, '❌ تم رفض عملية الإيداع. راجع الدعم إذا لزم الأمر.');
+        $text = $this->messages->render('deposit_rejected', [], '❌ تم رفض عملية الإيداع. راجع الدعم إذا لزم الأمر.');
+        $this->telegram->sendStoreUserMessage((int) $user->telegram_id, $text);
 
         return true;
     }

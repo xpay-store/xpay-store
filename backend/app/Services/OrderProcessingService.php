@@ -13,7 +13,9 @@ use Illuminate\Support\Str;
 class OrderProcessingService
 {
     public function __construct(
-        private ProviderService $providers
+        private ProviderService $providers,
+        private TelegramBotService $telegram,
+        private OrderMessageService $messages
     ) {}
 
     /**
@@ -114,6 +116,19 @@ class OrderProcessingService
             $order->provider_response = $providerResponse;
             $order->save();
 
+            $this->telegram->sendStoreUserMessage(
+                (int) $user->telegram_id,
+                $this->messages->render(
+                    'order_success',
+                    [
+                        'order_number' => (string) $order->order_number,
+                        'amount_usd' => number_format($priceUsd, 2),
+                        'amount_syp' => number_format($priceSyp, 0),
+                    ],
+                    '✅ تم تنفيذ طلبك بنجاح. رقم الطلب: {order_number}'
+                )
+            );
+
             return ['ok' => true, 'order' => $order->fresh()];
         }
 
@@ -129,6 +144,15 @@ class OrderProcessingService
         $order->status = 'reject';
         $order->provider_response = $result['response'] ?? ['error' => $result['error'] ?? 'unknown'];
         $order->save();
+
+        $this->telegram->sendStoreUserMessage(
+            (int) $user->telegram_id,
+            $this->messages->render(
+                'order_failed',
+                ['order_number' => (string) $order->order_number],
+                '❌ تعذر تنفيذ الطلب رقم {order_number}. تم إرجاع الرصيد إلى محفظتك.'
+            )
+        );
 
         return ['ok' => true, 'order' => $order->fresh(), 'provider_failed' => true];
     }
