@@ -47,5 +47,10 @@ class ImportProducts extends Page implements HasForms
 
         Notification::make()->title("تمت المزامنة: {$count} عنصر").success()->send();
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->check() && (auth()->user()->role ?? null) === 'admin';
+    }
 }
 

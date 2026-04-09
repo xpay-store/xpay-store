@@ -6,11 +6,10 @@ use App\Filament\Resources\CouponResource\Pages\ManageCoupons;
 use App\Models\Coupon;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CouponResource extends Resource
+class CouponResource extends AdminResource
 {
     protected static ?string $model = Coupon::class;
     protected static ?string $navigationGroup = 'المدفوعات والإعدادات';

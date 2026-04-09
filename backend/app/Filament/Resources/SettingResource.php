@@ -6,11 +6,10 @@ use App\Filament\Resources\SettingResource\Pages\ManageSettings;
 use App\Models\Setting;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class SettingResource extends Resource
+class SettingResource extends AdminResource
 {
     protected static ?string $model = Setting::class;
     protected static ?string $navigationGroup = 'المدفوعات والإعدادات';

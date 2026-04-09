@@ -6,11 +6,10 @@ use App\Filament\Resources\DepositResource\Pages\ManageDeposits;
 use App\Models\Deposit;
 use App\Services\DepositReviewService;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class DepositResource extends Resource
+class DepositResource extends AdminResource
 {
     protected static ?string $model = Deposit::class;
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';

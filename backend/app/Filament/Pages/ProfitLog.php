@@ -10,6 +10,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Illuminate\Support\Carbon;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProfitLog extends Page implements HasForms
@@ -53,8 +54,8 @@ class ProfitLog extends Page implements HasForms
      */
     public function rows(): array
     {
-        $from = now()->parse((string) ($this->data['from'] ?? now()->subDays(30)->toDateString()))->startOfDay();
-        $to = now()->parse((string) ($this->data['to'] ?? now()->toDateString()))->endOfDay();
+        $from = Carbon::parse((string) ($this->data['from'] ?? now()->subDays(30)->toDateString()))->startOfDay();
+        $to = Carbon::parse((string) ($this->data['to'] ?? now()->toDateString()))->endOfDay();
         $groupBy = (string) ($this->data['group_by'] ?? 'day');
 
         $orders = Order::query()
@@ -65,7 +66,7 @@ class ProfitLog extends Page implements HasForms
 
         $buckets = [];
         foreach ($orders as $order) {
-            $created = $order->created_at ? now()->parse($order->created_at) : now();
+            $created = $order->created_at ? Carbon::parse($order->created_at) : now();
             $key = match ($groupBy) {
                 'year' => $created->format('Y'),
                 'month' => $created->format('Y-m'),
@@ -119,6 +120,11 @@ class ProfitLog extends Page implements HasForms
         return Pdf::loadHTML($html)
             ->setPaper('a4', 'portrait')
             ->download('profit-log-'.now()->format('Ymd-His').'.pdf');
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->check() && (auth()->user()->role ?? null) === 'admin';
     }
 }
 

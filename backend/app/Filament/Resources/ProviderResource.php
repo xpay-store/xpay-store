@@ -7,11 +7,10 @@ use App\Models\Provider;
 use App\Services\ProviderService;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ProviderResource extends Resource
+class ProviderResource extends AdminResource
 {
     protected static ?string $model = Provider::class;
     protected static ?string $navigationIcon = 'heroicon-o-server';

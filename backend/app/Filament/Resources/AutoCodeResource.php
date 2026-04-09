@@ -6,11 +6,10 @@ use App\Filament\Resources\AutoCodeResource\Pages\ManageAutoCodes;
 use App\Models\AutoCode;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class AutoCodeResource extends Resource
+class AutoCodeResource extends AdminResource
 {
     protected static ?string $model = AutoCode::class;
     protected static ?string $navigationIcon = 'heroicon-o-key';

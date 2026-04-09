@@ -6,11 +6,10 @@ use App\Filament\Resources\ProductResource\Pages\ManageProducts;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class ProductResource extends Resource
+class ProductResource extends AdminResource
 {
     protected static ?string $model = Product::class;
     protected static ?string $navigationIcon = 'heroicon-o-cube';

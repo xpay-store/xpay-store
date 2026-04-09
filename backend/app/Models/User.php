@@ -62,6 +62,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return in_array($this->role, ['admin', 'agent'], true) && ! $this->is_banned;
+        return $this->role === 'admin' && ! $this->is_banned;
     }
 }

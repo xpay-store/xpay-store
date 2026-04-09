@@ -6,11 +6,10 @@ use App\Filament\Resources\PaymentMethodResource\Pages\ManagePaymentMethods;
 use App\Models\PaymentMethod;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class PaymentMethodResource extends Resource
+class PaymentMethodResource extends AdminResource
 {
     protected static ?string $model = PaymentMethod::class;
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';

@@ -6,11 +6,10 @@ use App\Filament\Resources\OrderResource\Pages\ManageOrders;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class OrderResource extends Resource
+class OrderResource extends AdminResource
 {
     protected static ?string $model = Order::class;
 

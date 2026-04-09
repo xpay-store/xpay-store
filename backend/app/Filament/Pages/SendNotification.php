@@ -68,5 +68,10 @@ class SendNotification extends Page implements HasForms
 
         Notification::make()->title("تم إرسال {$count} إشعار").success()->send();
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->check() && (auth()->user()->role ?? null) === 'admin';
+    }
 }
 

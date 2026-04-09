@@ -6,11 +6,10 @@ use App\Filament\Resources\SocialLinkResource\Pages\ManageSocialLinks;
 use App\Models\SocialLink;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class SocialLinkResource extends Resource
+class SocialLinkResource extends AdminResource
 {
     protected static ?string $model = SocialLink::class;
     protected static ?string $navigationGroup = 'المدفوعات والإعدادات';
