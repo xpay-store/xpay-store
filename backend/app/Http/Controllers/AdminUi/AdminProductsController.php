@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\AdminUi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ProductAdminController extends Controller
+class AdminProductsController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
@@ -22,9 +22,9 @@ class ProductAdminController extends Controller
             $query->where('name', 'like', '%'.$q.'%');
         }
 
-        $products = $query->orderBy('name')->limit($limit)->get();
+        $items = $query->orderBy('name')->limit($limit)->get();
 
-        return response()->json(['data' => $products]);
+        return response()->json(['data' => $items]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -59,8 +59,10 @@ class ProductAdminController extends Controller
         if ($product === null) {
             return response()->json(['message' => 'Not found.'], 404);
         }
+
         $product->delete();
 
         return response()->json(['message' => 'Deleted.']);
     }
 }
+

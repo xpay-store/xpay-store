@@ -6,11 +6,15 @@ use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\ProductImportController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Admin\UserAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['admin.token'])->group(function () {
+    Route::get('stats', [StatsController::class, 'overview']);
+
     Route::post('products/import', [ProductImportController::class, 'import']);
+    Route::get('products', [ProductAdminController::class, 'index']);
     Route::put('products/{id}', [ProductAdminController::class, 'update']);
     Route::delete('products/{id}', [ProductAdminController::class, 'destroy']);
 

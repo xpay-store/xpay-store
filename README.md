@@ -60,13 +60,23 @@
 
 ### إدارة — مسبوقة بـ `/admin` (Bearer `ADMIN_API_TOKEN`)
 
+- `GET /admin/stats`
 - `POST /admin/products/import`
+- `GET /admin/products`
 - `PUT /admin/products/{id}` · `DELETE /admin/products/{id}`
 - `GET /admin/deposits/pending` · `POST /admin/deposits/{id}/approve|reject`
 - `GET /admin/reports/sales`
 - `PUT /admin/settings/general`
 - `POST /admin/categories/order`
 - `GET /admin/users` · `POST /admin/users/{id}/balance`
+
+## لوحة التحكم (Admin UI)
+
+تمت إضافة لوحة تحكم Blade بسيطة داخل الـ Backend:
+
+- **`GET /admin`**: صفحة تسجيل الدخول (إدخال `ADMIN_API_TOKEN`)
+- **`GET /admin/dashboard`**: لوحة التحكم (Session-protected)
+- بيانات الواجهة تُجلب من مسارات داخلية محمية بالجلسة تحت **`/admin/ui/*`**
 
 ### Webhooks (Telegram)
 

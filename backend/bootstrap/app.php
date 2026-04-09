@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'telegram.webapp' => \App\Http\Middleware\TelegramWebAppAuth::class,
             'admin.token' => \App\Http\Middleware\AdminApiToken::class,
+            'admin.session' => \App\Http\Middleware\AdminSessionAuth::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
