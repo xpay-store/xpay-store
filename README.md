@@ -119,6 +119,40 @@ php artisan schedule:run
 3. مجلد الإخراج: `dist`.
 4. ضبط `VITE_API_URL` في إعدادات المشروع.
 
+## لوحة إدارة Filament v3
+
+تمت إضافة لوحة إدارة Filament على المسار:
+
+- `https://your-api-domain/panel`
+
+### تثبيت الحزم (على Render build)
+
+أضف ضمن خطوة البناء:
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan filament:install --panels --no-interaction || true
+php artisan optimize:clear
+```
+
+### إنشاء مدير افتراضي
+
+```bash
+php artisan db:seed
+```
+
+بيانات الدخول الافتراضية:
+
+- Email: `admin@xpay.com`
+- Password: `password`
+
+> مهم: غيّر كلمة المرور مباشرة بعد أول دخول.
+
+### ملاحظات
+
+- لا يوجد أي تعديل كاسر على `/api/*`؛ الـ API الحالية تبقى كما هي.
+- لوحة الإدارة تعتمد على `User.role` (`admin` / `agent`) للسماح بالدخول.
+
 ## الفهارس الموصى بها في MongoDB Atlas
 
 - `users.telegram_id` (فريد)

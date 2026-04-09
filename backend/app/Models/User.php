@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use MongoDB\Laravel\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     protected $connection = 'mongodb';
 
@@ -14,6 +16,7 @@ class User extends Authenticatable
         'telegram_id',
         'username',
         'email',
+        'password',
         'balance',
         'role',
         'is_banned',
@@ -24,9 +27,11 @@ class User extends Authenticatable
         'telegram_id' => 'integer',
         'balance' => 'array',
         'is_banned' => 'boolean',
+        'password' => 'hashed',
     ];
 
     protected $hidden = [
+        'password',
         'remember_token',
     ];
 
@@ -53,5 +58,10 @@ class User extends Authenticatable
     public function getBalanceSypAttribute(): float
     {
         return (float) ($this->balance['SYP'] ?? 0);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return in_array($this->role, ['admin', 'agent'], true) && ! $this->is_banned;
     }
 }
