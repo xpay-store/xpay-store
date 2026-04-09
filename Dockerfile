@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
+    libgd-dev \
+    && docker-php-ext-install gd \
     && pecl install mongodb-1.20.0 \
     && docker-php-ext-enable mongodb \
     && rm -rf /var/lib/apt/lists/*
